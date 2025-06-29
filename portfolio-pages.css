@@ -141,7 +141,7 @@
 
 /* Loading Animation for Images */
 .gallery-item img {
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s ease;
 }
 
@@ -154,14 +154,7 @@
     cursor: pointer;
 }
 
-/* Optional: Add loading placeholder */
+/* Remove the loading placeholder since images should be visible */
 .gallery-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #f0f0f0;
-    z-index: -1;
+    display: none;
 } 

@@ -71,8 +71,8 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(item);
     });
 
-    // Add loading animation for images
-    const images = document.querySelectorAll('img');
+    // Add loading animation for images (excluding portfolio images)
+    const images = document.querySelectorAll('img:not(.gallery-item img):not(.portfolio-item img)');
     
     images.forEach(img => {
         img.addEventListener('load', function() {
