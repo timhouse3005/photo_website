@@ -1,0 +1,167 @@
+/* Portfolio Pages Specific Styles */
+
+/* Portfolio Page Layout */
+.portfolio-page {
+    padding-top: 80px; /* Account for fixed header */
+}
+
+/* Portfolio Header Section */
+.portfolio-header {
+    padding: 4rem 0 3rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    text-align: center;
+}
+
+.portfolio-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.series-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Gallery Section */
+.portfolio-gallery {
+    padding: 3rem 0;
+    background: #fafafa;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Back to Portfolio Button */
+.back-to-portfolio {
+    padding: 2rem 0;
+    background: white;
+    text-align: center;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.back-button:hover {
+    background: #000;
+}
+
+/* Navigation Brand Link */
+.nav-brand h1 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-brand h1 a:hover {
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .portfolio-header h1 {
+        font-size: 2rem;
+    }
+    
+    .series-description {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .gallery-item img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio-header {
+        padding: 2rem 0 1.5rem;
+    }
+    
+    .portfolio-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .gallery-item img {
+        height: 180px;
+    }
+}
+
+/* Loading Animation for Images */
+.gallery-item img {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item img.loaded {
+    opacity: 1;
+}
+
+/* Optional: Lightbox Effect */
+.gallery-item {
+    cursor: pointer;
+}
+
+/* Optional: Add loading placeholder */
+.gallery-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #f0f0f0;
+    z-index: -1;
+} 
