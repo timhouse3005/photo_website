@@ -1,19 +1,35 @@
+// Utility function: Debounce to limit function calls
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 // Smooth scrolling for navigation links
 document.addEventListener('DOMContentLoaded', function() {
+    // Cache header height to avoid repeated DOM queries
+    const header = document.querySelector('.header');
+    const headerHeight = header ? header.offsetHeight : 0;
+
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
-    
+
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            
+
             const targetId = this.getAttribute('href');
             const targetSection = document.querySelector(targetId);
-            
+
             if (targetSection) {
-                const headerHeight = document.querySelector('.header').offsetHeight;
                 const targetPosition = targetSection.offsetTop - headerHeight;
-                
+
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -22,48 +38,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add active class to navigation based on scroll position
-    window.addEventListener('scroll', function() {
+    // Add active class to navigation based on scroll position (debounced)
+    const handleScroll = debounce(function() {
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-menu a');
-        
+
         let current = '';
-        
+
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
-            const headerHeight = document.querySelector('.header').offsetHeight;
-            
+
             if (window.pageYOffset >= (sectionTop - headerHeight - 200)) {
                 current = section.getAttribute('id');
             }
         });
-        
+
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === `#${current}`) {
                 link.classList.add('active');
             }
         });
-    });
+    }, 100); // Debounce scroll events to fire at most every 100ms
+
+    window.addEventListener('scroll', handleScroll);
 
     // Add fade-in animation for portfolio items
     const portfolioItems = document.querySelectorAll('.portfolio-item');
-    
+
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
+                // Unobserve after animation to prevent memory leaks
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
-    
+
     portfolioItems.forEach(item => {
         item.style.opacity = '0';
         item.style.transform = 'translateY(20px)';

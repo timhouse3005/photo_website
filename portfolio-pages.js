@@ -29,102 +29,135 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Lightbox functionality
+// Store lightbox styles globally to prevent re-adding on each open
+let lightboxStylesAdded = false;
+
 function openLightbox(imageSrc, imageAlt) {
-    // Create lightbox overlay
+    // Create lightbox overlay programmatically (prevents XSS)
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox-overlay';
-    lightbox.innerHTML = `
-        <div class="lightbox-content">
-            <img src="${imageSrc}" alt="${imageAlt}">
-            <button class="lightbox-close">&times;</button>
-        </div>
-    `;
-    
-    // Add lightbox styles
-    const lightboxStyles = document.createElement('style');
-    lightboxStyles.textContent = `
-        .lightbox-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .lightbox-overlay.active {
-            opacity: 1;
-        }
-        
-        .lightbox-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-        }
-        
-        .lightbox-content img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-        
-        .lightbox-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            padding: 0;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .lightbox-close:hover {
-            color: #ccc;
-        }
-    `;
-    
-    document.head.appendChild(lightboxStyles);
+
+    // Create lightbox content
+    const lightboxContent = document.createElement('div');
+    lightboxContent.className = 'lightbox-content';
+
+    // Create image element with properly set attributes
+    const img = document.createElement('img');
+    img.src = imageSrc; // Safely set as property
+    img.alt = imageAlt; // Safely set as property
+
+    // Create close button
+    const closeButton = document.createElement('button');
+    closeButton.className = 'lightbox-close';
+    closeButton.textContent = '×';
+
+    // Assemble lightbox structure
+    lightboxContent.appendChild(img);
+    lightboxContent.appendChild(closeButton);
+    lightbox.appendChild(lightboxContent);
+
+    // Add lightbox styles only once
+    if (!lightboxStylesAdded) {
+        const lightboxStyles = document.createElement('style');
+        lightboxStyles.id = 'lightbox-styles';
+        lightboxStyles.textContent = `
+            .lightbox-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .lightbox-overlay.active {
+                opacity: 1;
+            }
+
+            .lightbox-content {
+                position: relative;
+                max-width: 90%;
+                max-height: 90%;
+            }
+
+            .lightbox-content img {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+            }
+
+            .lightbox-close {
+                position: absolute;
+                top: -40px;
+                right: 0;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 2rem;
+                cursor: pointer;
+                padding: 0;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .lightbox-close:hover {
+                color: #ccc;
+            }
+        `;
+
+        document.head.appendChild(lightboxStyles);
+        lightboxStylesAdded = true;
+    }
+
     document.body.appendChild(lightbox);
-    
+
     // Show lightbox
     setTimeout(() => {
         lightbox.classList.add('active');
     }, 10);
-    
-    // Close lightbox functionality
-    const closeLightbox = () => {
-        lightbox.classList.remove('active');
-        setTimeout(() => {
-            document.body.removeChild(lightbox);
-        }, 300);
-    };
-    
-    lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', function(e) {
-        if (e.target === lightbox) {
-            closeLightbox();
-        }
-    });
-    
-    // Close on escape key
-    document.addEventListener('keydown', function(e) {
+
+    // Event handler references for cleanup
+    const handleEscapeKey = (e) => {
         if (e.key === 'Escape') {
             closeLightbox();
         }
-    });
+    };
+
+    const handleOverlayClick = (e) => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    };
+
+    // Close lightbox functionality with proper cleanup
+    const closeLightbox = () => {
+        lightbox.classList.remove('active');
+
+        // Remove event listeners to prevent memory leaks
+        document.removeEventListener('keydown', handleEscapeKey);
+        lightbox.removeEventListener('click', handleOverlayClick);
+        closeButton.removeEventListener('click', closeLightbox);
+
+        setTimeout(() => {
+            if (lightbox.parentNode) {
+                document.body.removeChild(lightbox);
+            }
+        }, 300);
+    };
+
+    // Add event listeners
+    closeButton.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', handleOverlayClick);
+    document.addEventListener('keydown', handleEscapeKey);
 }
 
 // Smooth scrolling for navigation links (if needed)
