@@ -92,23 +92,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add loading animation for images (excluding portfolio images)
     const images = document.querySelectorAll('img:not(.gallery-item img):not(.portfolio-item img)');
-    
+
     images.forEach(img => {
         img.addEventListener('load', function() {
             this.style.opacity = '1';
         });
-        
+
         img.style.opacity = '0';
         img.style.transition = 'opacity 0.3s ease';
     });
-});
-
-// Add some CSS for active navigation state
-const style = document.createElement('style');
-style.textContent = `
-    .nav-menu a.active {
-        color: #000 !important;
-        font-weight: 600 !important;
-    }
-`;
-document.head.appendChild(style); 
+}); 

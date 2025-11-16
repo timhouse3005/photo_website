@@ -62,6 +62,40 @@ body {
     background-color: var(--color-bg-white);
 }
 
+/* Accessibility: Skip to main content link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-primary);
+    color: white;
+    padding: var(--spacing-sm);
+    text-decoration: none;
+    z-index: 10001;
+    border-radius: 0 0 var(--border-radius-sm) 0;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Accessibility: Focus visible styles */
+*:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Remove default focus outline for mouse users */
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
 .container {
     max-width: var(--max-width-container);
     margin: 0 auto;
@@ -115,6 +149,11 @@ body {
 
 .nav-menu a:hover {
     color: var(--color-primary-dark);
+}
+
+.nav-menu a.active {
+    color: var(--color-primary-dark);
+    font-weight: 600;
 }
 
 /* Hero Section */

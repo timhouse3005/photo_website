@@ -36,6 +36,9 @@ function openLightbox(imageSrc, imageAlt) {
     // Create lightbox overlay programmatically (prevents XSS)
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox-overlay';
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.setAttribute('aria-modal', 'true');
+    lightbox.setAttribute('aria-label', 'Image lightbox');
 
     // Create lightbox content
     const lightboxContent = document.createElement('div');
@@ -50,6 +53,8 @@ function openLightbox(imageSrc, imageAlt) {
     const closeButton = document.createElement('button');
     closeButton.className = 'lightbox-close';
     closeButton.textContent = '×';
+    closeButton.setAttribute('aria-label', 'Close lightbox');
+    closeButton.setAttribute('type', 'button');
 
     // Assemble lightbox structure
     lightboxContent.appendChild(img);
@@ -158,28 +163,4 @@ function openLightbox(imageSrc, imageAlt) {
     closeButton.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', handleOverlayClick);
     document.addEventListener('keydown', handleEscapeKey);
-}
-
-// Smooth scrolling for navigation links (if needed)
-document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                const headerHeight = document.querySelector('.header').offsetHeight;
-                const targetPosition = targetSection.offsetTop - headerHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}); 
+} 

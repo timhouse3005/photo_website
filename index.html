@@ -3,13 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fine Art Photography Portfolio</title>
+    <meta name="description" content="Fine art photography portfolio showcasing landscape, nature, urban, and abstract photography. Capturing moments in time through light, composition, and emotion.">
+    <meta name="author" content="Your Name">
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Fine Art Photography Portfolio">
+    <meta property="og:description" content="Fine art photography portfolio showcasing landscape, nature, urban, and abstract photography.">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta property="og:image" content="https://yourwebsite.com/images/series1/2021-11-16 Aldinga Rocks_1.jpg">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fine Art Photography Portfolio">
+    <meta name="twitter:description" content="Fine art photography portfolio showcasing landscape, nature, urban, and abstract photography.">
+    <meta name="twitter:image" content="https://yourwebsite.com/images/series1/2021-11-16 Aldinga Rocks_1.jpg">
+
+    <title>Fine Art Photography Portfolio | Your Name</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header class="header">
-        <nav class="nav">
+        <nav class="nav" aria-label="Main navigation">
             <div class="nav-brand">
                 <h1>Your Name</h1>
                 <p>Fine Art Photography</p>
@@ -23,7 +42,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main-content">
         <section id="home" class="hero">
             <div class="hero-content">
                 <h2>Capturing Moments in Time</h2>
@@ -32,34 +51,34 @@
             </div>
         </section>
 
-        <section id="portfolio" class="portfolio">
+        <section id="portfolio" class="portfolio" aria-labelledby="portfolio-heading">
             <div class="container">
-                <h2>Portfolio</h2>
-                <div class="portfolio-grid">
+                <h2 id="portfolio-heading">Portfolio</h2>
+                <div class="portfolio-grid" role="list">
                     <!-- Portfolio items will be added here -->
                     <a href="portfolio-1.html" class="portfolio-item">
-                        <img src="images/series1/2021-11-16 Aldinga Rocks_1.jpg" alt="Aldinga Rocks Series">
+                        <img src="images/series1/2021-11-16 Aldinga Rocks_1.jpg" alt="Coastal landscape photograph featuring Aldinga Rocks at sunset" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Landscape Series</h3>
                             <p>Capturing the natural beauty of coastal landscapes</p>
                         </div>
                     </a>
                     <a href="portfolio-2.html" class="portfolio-item">
-                        <img src="images/series2/DSCF0886.jpg" alt="Nature Series">
+                        <img src="images/series2/DSCF0886.jpg" alt="Nature photography showcasing intricate natural details and patterns" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Nature Series</h3>
                             <p>Exploring the intricate details of the natural world</p>
                         </div>
                     </a>
                     <a href="portfolio-3.html" class="portfolio-item">
-                        <img src="images/series3/DSCF3206_1.jpg" alt="Urban Series">
+                        <img src="images/series3/DSCF3206_1.jpg" alt="Urban street photography capturing city life and architecture" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Urban Series</h3>
                             <p>Documenting the rhythm and energy of city life</p>
                         </div>
                     </a>
                     <a href="portfolio-4.html" class="portfolio-item">
-                        <img src="images/series4/DSCF4117.jpg" alt="Abstract Series">
+                        <img src="images/series4/DSCF4117.jpg" alt="Abstract fine art photography with patterns and geometric forms" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Abstract Series</h3>
                             <p>Finding beauty in patterns and abstract forms</p>
